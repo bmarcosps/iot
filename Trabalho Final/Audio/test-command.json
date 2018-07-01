@@ -1,0 +1,8 @@
+{
+    "TranscriptionJobName": "testefinal", 
+    "LanguageCode": "en-US", 
+    "MediaFormat": "wav", 
+    "Media": {
+        "MediaFileUri": "https://s3.amazonaws.com/trabalho-iot/file.wav"
+    }
+}
