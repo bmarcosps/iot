@@ -1,6 +1,5 @@
 import speech_recognition as sr
 import time
-
 import argparse
 
 r = sr.Recognizer()
@@ -33,8 +32,8 @@ try:
 
         try:
             result = r.recognize_google(audio, language='pt-br')
-            print(result)
+            print(f'RESULTADO: [[ {result} ]]')
         except sr.UnknownValueError:
-            print('Não foi possível entender o áudio')
+            print('RESULTADO: [[ Não foi possível entender o que disse =/ ]]')
 except FileNotFoundError:
     print('Caminho do arquivo inválido')
