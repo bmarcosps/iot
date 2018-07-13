@@ -9,8 +9,8 @@ const mqtt = require('mqtt');
 const pythonExec = 'python3';
 //const scriptPath = '/Users/matheus/Library/Mobile Documents/com~apple~CloudDocs/Development/Git/iot/Trabalho Final/Audio/speech.py';
 const scriptPath = '/root/speech.py';
-const portaTopic = 'DCCPortaTopic1'; // A - Abrir, F - Fechar
-const tempTopic  = 'DCCTempTopic1'; // string com temperatura e humidade
+const portaTopic = 'DCC091PortaTopic1'; // A - Abrir, F - Fechar
+const tempTopic  = 'DCC091TempTopic1'; // string com temperatura e humidade
 
 
 const client  = mqtt.connect('mqtt://test.mosquitto.org');
@@ -39,15 +39,22 @@ app.listen(3000, function () {
 
 // MQTT
 
+var temperatura = 'O Node retornar essa informação... =/';
+
 client.on('connect', function () {
   console.log('Mosquito Connected');
   client.subscribe(portaTopic);
   client.subscribe(tempTopic);
+  client.publish(portaTopic, 'T');
 })
 
 client.on('message', function (topic, message) {
   // message is Buffer
   console.log('MQTT ' + topic +': '+ message.toString());
+
+  if(topic == tempTopic) {
+    temperatura = message.toString();
+  }
 })
 
 // Bot
@@ -67,6 +74,14 @@ const actions = [
       client.publish(portaTopic, 'F');
 
       return 'Ok! Trancando a porta!';
+    }
+  },
+  {
+    triggers: ['qual a temperatura', 'temperatura', 'humidade'],
+    cb: function () {
+      client.publish(portaTopic, 'T');
+
+      return 'Atualmente está: '+temperatura;
     }
   },
 ]

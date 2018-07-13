@@ -95,7 +95,7 @@ export default {
       form.append('audio', audio, 'audio')
 
       let vm = this;
-      this.axios.post('http://matheusmarques.com:3000/upload', form).then(response => {
+      this.axios.post('http://direct.matheusmarques.com:3000/upload', form).then(response => {
         window.console.log(response.data)
         // Message
         if(response.data.message) {
